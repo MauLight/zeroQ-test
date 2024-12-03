@@ -4,6 +4,7 @@ import { lazy, useLayoutEffect } from 'react'
 //* Components
 import Topbar from './components/topbar/Topbar'
 import useFetchSort from './hooks/useFetchSort'
+import ErrorBoundary from './components/error/ErrorBoundary'
 
 const Home = lazy(async () => await import('@/views/Home'))
 
@@ -19,7 +20,9 @@ function App() {
       <Topbar />
       {
         status === 'success' && (
-          <Home />
+          <ErrorBoundary>
+            <Home />
+          </ErrorBoundary>
         )
       }
     </div>

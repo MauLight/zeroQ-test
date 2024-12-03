@@ -13,6 +13,7 @@ interface OfficesProps {
 function useFetchSort() {
     const [offices, setOffices] = useState<OfficesProps[]>([])
     const [status, setStatus] = useState<'idle' | 'loading' | 'rejected' | 'success'>('idle')
+    const [error, setError] = useState<string>('')
 
     async function getOffices() {
         try {
@@ -22,6 +23,11 @@ function useFetchSort() {
             setStatus('success')
         } catch (error) {
             setStatus('rejected')
+            if (axios.isAxiosError(error)) {
+                setError(error.response?.data.message || error.message)
+            } else {
+                setError('There was an error on our side.')
+            }
             console.error(error)
         }
     }
@@ -30,7 +36,7 @@ function useFetchSort() {
         getOffices()
     }, [])
 
-    return [offices, status]
+    return [offices, status, error]
 }
 
 export default useFetchSort
