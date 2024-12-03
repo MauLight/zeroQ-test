@@ -12,12 +12,12 @@ interface OfficesProps {
 
 function useFetchSort() {
     const [offices, setOffices] = useState<OfficesProps[]>([])
-    const [status, setStatus] = useState<'idle' | 'loading' | 'rejected' | 'success'>('idle')
+    const [status, setStatus] = useState<'idle' | 'pending' | 'rejected' | 'success'>('idle')
     const [error, setError] = useState<string>('')
 
     async function getOffices() {
         try {
-            setStatus('loading')
+            setStatus('pending')
             const { data } = await axios.get(backendUrl)
             setOffices(data)
             setStatus('success')
