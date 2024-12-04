@@ -17,10 +17,12 @@ import { OfficesProps } from './utils/types'
 
 function App() {
   const { offices, status, error } = useFetchSort()
+
   //* Search state
   const [initialData, setInitialData] = useState<any[]>(() => offices)
   const [searchTerm, setSearchTerm] = useState<string>('')
 
+  //* search the initial fetched data set on searchTerm change, or revert to initial fetched data set.
   function searchData() {
     if (searchTerm.length > 0) {
       setInitialData(initialData.filter(elem => elem.name.toLowerCase().includes(searchTerm.toLowerCase())))
@@ -29,6 +31,7 @@ function App() {
     }
   }
 
+  //* Trigger searchData on office change (initial fetch) or on searchTerm change.
   useEffect(() => {
     if (offices.length > 0) {
       searchData()
