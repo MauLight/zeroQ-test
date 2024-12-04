@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type ReactNode, memo } from 'react'
 import company_logo from '@/assets/logo.png'
 
 function Topbar(): ReactNode {
@@ -9,4 +9,4 @@ function Topbar(): ReactNode {
     )
 }
 
-export default Topbar
+export default memo(Topbar)

@@ -1,4 +1,5 @@
-[
+{
+  "offices": [
     {
       "id": 1,
       "name": "Oficina Central",
@@ -196,3 +197,4 @@
       ]
     }
   ]
+}
