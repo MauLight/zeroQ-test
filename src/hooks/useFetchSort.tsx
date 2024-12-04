@@ -16,13 +16,13 @@ function useFetchSort() {
     const [error, setError] = useState<string>('')
 
     async function getOffices() {
+        console.log('Starting the fetch!')
         try {
             setStatus('pending')
             const { data } = await axios.get(backendUrl)
 
             //* Immutable data sort to retain original data state. 
             const sortedData: OfficesProps[] = [...data].sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
-
             setOffices(sortedData)
             setStatus('success')
         } catch (error) {
@@ -38,6 +38,8 @@ function useFetchSort() {
 
     useLayoutEffect(() => {
         getOffices()
+        const fetchInterval = setInterval(getOffices, 60000)
+        return () => clearInterval(fetchInterval)
     }, [])
 
     return [offices, status, error]

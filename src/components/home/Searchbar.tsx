@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { type ReactNode, memo } from 'react'
 
 function Searchbar(): ReactNode {
     return (
@@ -13,4 +13,4 @@ function Searchbar(): ReactNode {
     )
 }
 
-export default Searchbar
+export default memo(Searchbar)

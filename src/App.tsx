@@ -4,6 +4,7 @@ import useFetchSort from './hooks/useFetchSort'
 
 //* Components
 import Topbar from './components/topbar/Topbar'
+import Searchbar from '@/components/home/Searchbar'
 import ErrorBoundary from './components/error/ErrorBoundary'
 
 const Home = lazy(async () => await import('@/views/Home'))
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className='min-h-screen bg-zeroq-800'>
       <Topbar />
+      <Searchbar />
       {
         status === 'success' && (
           <ErrorBoundary>
