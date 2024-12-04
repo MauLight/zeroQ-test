@@ -19,7 +19,11 @@ function useFetchSort() {
         try {
             setStatus('pending')
             const { data } = await axios.get(backendUrl)
-            setOffices(data)
+
+            //* Immutable data sort to retain original data state. 
+            const sortedData: OfficesProps[] = [...data].sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
+
+            setOffices(sortedData)
             setStatus('success')
         } catch (error) {
             setStatus('rejected')

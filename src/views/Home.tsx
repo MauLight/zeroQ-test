@@ -24,7 +24,8 @@ function Home({ offices }: HomeProps): ReactNode {
                                 name={office.name}
                                 waiting={40}
                                 elapsed='2:10'
-                                online={office.online} />
+                                online={office.online}
+                            />
                         ))
                     }
                 </div>

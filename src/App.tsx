@@ -1,20 +1,19 @@
-import { lazy, useLayoutEffect } from 'react'
+import { lazy } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
+import useFetchSort from './hooks/useFetchSort'
 
 //* Components
 import Topbar from './components/topbar/Topbar'
-import useFetchSort from './hooks/useFetchSort'
 import ErrorBoundary from './components/error/ErrorBoundary'
-import { OfficesProps } from './utils/types'
 
 const Home = lazy(async () => await import('@/views/Home'))
 
+//* Types
+import { OfficesProps } from './utils/types'
+
+
 function App() {
   const [offices, status, error] = useFetchSort()
-
-  useLayoutEffect(() => {
-    console.log(offices)
-  }, [status])
 
   return (
     <div className='min-h-screen bg-zeroq-800'>
