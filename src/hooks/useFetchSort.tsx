@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useLayoutEffect, useState } from 'react'
+import { formatSecondsToMinutes } from '@/utils/functions'
 
 const backendUrl = import.meta.env.VITE_BACKENDURL
 
@@ -11,30 +12,31 @@ interface OfficesProps {
 }
 
 function useFetchSort() {
+
+    //* Fetch state
     const [offices, setOffices] = useState<OfficesProps[]>([])
     const [status, setStatus] = useState<'idle' | 'pending' | 'rejected' | 'success'>('idle')
     const [error, setError] = useState<string>('')
 
     async function getOffices() {
-        console.log('Starting the fetch!')
         try {
             setStatus('pending')
             const { data } = await axios.get(backendUrl)
 
-            //* Immutable data sort to retain original data state. 
+            //* Immutable data sort to retain original data state.
             const sortedData: OfficesProps[] = [...data].sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
 
-            //console.log(sortedData)
             const mapSortedData = sortedData.map((data) => {
                 let waiting = 0
+                let elapsed = 0
                 data.lines.forEach((line) => waiting += line.waiting)
-                return { ...data, waiting }
+                data.lines.forEach((line) => elapsed += line.elapsed)
+                return { ...data, waiting, elapsed: formatSecondsToMinutes(elapsed) }
             })
-
-            console.log(mapSortedData)
 
             setOffices(mapSortedData)
             setStatus('success')
+
         } catch (error) {
             setStatus('rejected')
             if (axios.isAxiosError(error)) {
@@ -52,7 +54,7 @@ function useFetchSort() {
         return () => clearInterval(fetchInterval)
     }, [])
 
-    return [offices, status, error]
+    return { offices, setOffices, status, error }
 }
 
 export default useFetchSort

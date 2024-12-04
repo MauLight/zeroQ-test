@@ -4,8 +4,8 @@ import { addUppercaseToFirstCharacter } from '@/utils/functions'
 interface ServiceCardProps {
     name: string
     waiting: number
-    elapsed: string
     online: boolean
+    elapsed: number
 }
 
 function ServiceCard({ name, waiting, elapsed, online }: ServiceCardProps): ReactNode {

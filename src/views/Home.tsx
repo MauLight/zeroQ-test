@@ -21,7 +21,7 @@ function Home({ offices }: HomeProps): ReactNode {
                                 key={office.id}
                                 name={office.name}
                                 waiting={office.waiting}
-                                elapsed='2:10'
+                                elapsed={office.elapsed}
                                 online={office.online}
                             />
                         ))

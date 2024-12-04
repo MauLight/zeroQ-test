@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
 import useFetchSort from './hooks/useFetchSort'
 
@@ -16,17 +16,34 @@ import { OfficesProps } from './utils/types'
 
 
 function App() {
-  const [offices, status, error] = useFetchSort()
+  const { offices, status, error } = useFetchSort()
+  //* Search state
+  const [initialData, setInitialData] = useState<any[]>(() => offices)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
+  function searchData() {
+    if (searchTerm.length > 0) {
+      setInitialData(initialData.filter(elem => elem.name.toLowerCase().includes(searchTerm.toLowerCase())))
+    } else {
+      setInitialData(offices)
+    }
+  }
+
+  useEffect(() => {
+    if (offices.length > 0) {
+      searchData()
+    }
+  }, [offices, searchTerm])
 
   return (
     <div className='min-h-screen bg-zeroq-800'>
       <Topbar />
-      <Searchbar />
+      <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {
         status === 'success' && (
           <ErrorBoundary>
             <Suspense fallback={<HomeSkeleton />} >
-              <Home offices={offices as OfficesProps[]} />
+              <Home offices={initialData as OfficesProps[]} />
             </Suspense>
           </ErrorBoundary>
         )

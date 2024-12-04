@@ -4,4 +4,5 @@ export interface OfficesProps {
     name: string
     online: boolean
     waiting: number
+    elapsed: number
 }
