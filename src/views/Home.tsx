@@ -20,7 +20,7 @@ function Home({ offices }: HomeProps): ReactNode {
                             <ServiceCard
                                 key={office.id}
                                 name={office.name}
-                                waiting={40}
+                                waiting={office.waiting}
                                 elapsed='2:10'
                                 online={office.online}
                             />

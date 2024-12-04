@@ -23,7 +23,17 @@ function useFetchSort() {
 
             //* Immutable data sort to retain original data state. 
             const sortedData: OfficesProps[] = [...data].sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
-            setOffices(sortedData)
+
+            //console.log(sortedData)
+            const mapSortedData = sortedData.map((data) => {
+                let waiting = 0
+                data.lines.forEach((line) => waiting += line.waiting)
+                return { ...data, waiting }
+            })
+
+            console.log(mapSortedData)
+
+            setOffices(mapSortedData)
             setStatus('success')
         } catch (error) {
             setStatus('rejected')
