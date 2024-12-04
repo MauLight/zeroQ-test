@@ -1,5 +1,7 @@
 import React from "react";
 
+const isDev = import.meta.env.DEV
+
 interface ErrorBoundaryProps {
     children: React.ReactNode;
 }
@@ -18,7 +20,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
                 </div>
             )
         }
-        console.log('ErrorBoundary', this.state.error)
+        if (isDev) console.log('ErrorBoundary', this.state.error)
         return this.props.children
     }
 }
