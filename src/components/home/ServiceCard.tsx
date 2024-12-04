@@ -1,21 +1,22 @@
 import { type ReactNode } from 'react'
 import { addUppercaseToFirstCharacter } from '@/utils/functions'
+import { OfficesProps } from '@/utils/types'
 
 interface ServiceCardProps {
-    name: string
-    waiting: number
-    online: boolean
-    elapsed: number
+    office: OfficesProps
+    handleToggleOnline: (id: number) => void
 }
 
-function ServiceCard({ name, waiting, elapsed, online }: ServiceCardProps): ReactNode {
+function ServiceCard({ office, handleToggleOnline }: ServiceCardProps): ReactNode {
 
-    const headerStyle = online ? 'h-3/4 bg-zeroq-600 flex justify-start items-start py-7 px-5 text-[#ffffff]' : 'h-3/4 bg-[#e2e2e2] flex justify-start items-start py-7 px-5 text-[#8b8b8b]'
+    const { id, name, elapsed, waiting, online } = office
 
-    const footerStyle = online ? 'h-1/4 flex gap-x-8 bg-zeroq-green px-5' : 'h-1/4 flex gap-x-8 bg-[#8b8b8b] px-5'
+    const headerStyle = online ? 'h-3/4 bg-zeroq-600 flex justify-start items-start py-7 px-5 text-[#ffffff]' : 'h-3/4 bg-[#e2e2e2] flex justify-start items-start py-7 px-5 text-gray-500'
+
+    const footerStyle = online ? 'h-1/4 flex gap-x-8 bg-emerald-700 px-5' : 'h-1/4 flex gap-x-8 bg-gray-500 px-5'
 
     return (
-        <section className="h-[12.5rem] col-span-1">
+        <section onClick={() => { handleToggleOnline(id) }} className="h-[12.5rem] col-span-1">
             <header className={headerStyle}>
                 <h2 className='text-[2rem] leading-tight'>
                     {addUppercaseToFirstCharacter(name)}

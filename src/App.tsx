@@ -7,13 +7,10 @@ import Topbar from './components/topbar/Topbar'
 import Searchbar from '@/components/home/Searchbar'
 import ErrorBoundary from './components/error/ErrorBoundary'
 import HomeSkeleton from './components/home/HomeSkeleton'
+import ServiceCard from './components/home/ServiceCard'
 
 //* Lazy components
 const Home = lazy(async () => await import('@/views/Home'))
-
-//* Types
-import { OfficesProps } from './utils/types'
-
 
 function App() {
   const { offices, status, error } = useFetchSort()
@@ -31,6 +28,11 @@ function App() {
     }
   }
 
+  function handleToggleOnline(id: number) {
+    const toggledMap = initialData.map((office) => office.id === id ? { ...office, online: !office.online } : office).sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
+    setInitialData(toggledMap)
+  }
+
   //* Trigger searchData on office change (initial fetch) or on searchTerm change.
   useEffect(() => {
     if (offices.length > 0) {
@@ -39,14 +41,26 @@ function App() {
   }, [offices, searchTerm])
 
   return (
-    <div className='min-h-screen bg-zeroq-800'>
+    <main className='min-h-screen bg-zeroq-800'>
       <Topbar />
       <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {
         status === 'success' && (
           <ErrorBoundary>
             <Suspense fallback={<HomeSkeleton />} >
-              <Home offices={initialData as OfficesProps[]} />
+              <Home>
+                <>
+                  {
+                    initialData.map((office) => (
+                      <ServiceCard
+                        key={office.id}
+                        office={office}
+                        handleToggleOnline={handleToggleOnline}
+                      />
+                    ))
+                  }
+                </>
+              </Home>
             </Suspense>
           </ErrorBoundary>
         )
@@ -65,7 +79,7 @@ function App() {
           </div>
         )
       }
-    </div>
+    </main>
   )
 }
 

@@ -1,15 +1,9 @@
 import axios from 'axios'
 import { useLayoutEffect, useState } from 'react'
 import { formatSecondsToMinutes } from '@/utils/functions'
+import { OfficesProps } from '@/utils/types'
 
 const backendUrl = import.meta.env.VITE_BACKENDURL
-
-interface OfficesProps {
-    id: number
-    lines: Array<{ waiting: number, elapsed: number }>
-    name: string
-    online: boolean
-}
 
 function useFetchSort() {
 
