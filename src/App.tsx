@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
 import useFetchSort from './hooks/useFetchSort'
 
@@ -6,7 +6,9 @@ import useFetchSort from './hooks/useFetchSort'
 import Topbar from './components/topbar/Topbar'
 import Searchbar from '@/components/home/Searchbar'
 import ErrorBoundary from './components/error/ErrorBoundary'
+import HomeSkeleton from './components/home/HomeSkeleton'
 
+//* Lazy components
 const Home = lazy(async () => await import('@/views/Home'))
 
 //* Types
@@ -23,7 +25,9 @@ function App() {
       {
         status === 'success' && (
           <ErrorBoundary>
-            <Home offices={offices as OfficesProps[]} />
+            <Suspense fallback={<HomeSkeleton />} >
+              <Home offices={offices as OfficesProps[]} />
+            </Suspense>
           </ErrorBoundary>
         )
       }
