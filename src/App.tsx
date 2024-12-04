@@ -5,6 +5,7 @@ import { RotatingLines } from 'react-loader-spinner'
 import Topbar from './components/topbar/Topbar'
 import useFetchSort from './hooks/useFetchSort'
 import ErrorBoundary from './components/error/ErrorBoundary'
+import { OfficesProps } from './utils/types'
 
 const Home = lazy(async () => await import('@/views/Home'))
 
@@ -21,7 +22,7 @@ function App() {
       {
         status === 'success' && (
           <ErrorBoundary>
-            <Home />
+            <Home offices={offices as OfficesProps[]} />
           </ErrorBoundary>
         )
       }
