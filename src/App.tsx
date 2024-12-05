@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { RotatingLines } from 'react-loader-spinner'
 import useFetchSort from './hooks/useFetchSort'
 
@@ -13,32 +13,7 @@ import ServiceCard from './components/home/ServiceCard'
 const Home = lazy(async () => await import('@/views/Home'))
 
 function App() {
-  const { offices, status, error } = useFetchSort()
-
-  //* Search state
-  const [initialData, setInitialData] = useState<any[]>(() => offices)
-  const [searchTerm, setSearchTerm] = useState<string>('')
-
-  //* search the initial fetched data set on searchTerm change, or revert to initial fetched data set.
-  function searchData() {
-    if (searchTerm.length > 0) {
-      setInitialData(initialData.filter(elem => elem.name.toLowerCase().includes(searchTerm.toLowerCase())))
-    } else {
-      setInitialData(offices)
-    }
-  }
-
-  function handleToggleOnline(id: number) {
-    const toggledMap = initialData.map((office) => office.id === id ? { ...office, online: !office.online } : office).sort((a: { online: boolean }, b: { online: boolean }) => Number(b.online) - Number(a.online))
-    setInitialData(toggledMap)
-  }
-
-  //* Trigger searchData on office change (initial fetch) or on searchTerm change.
-  useEffect(() => {
-    if (offices.length > 0) {
-      searchData()
-    }
-  }, [offices, searchTerm])
+  const { offices, status, error, searchTerm, setSearchTerm, handleToggleOnline } = useFetchSort()
 
   return (
     <main className='min-h-screen bg-zeroq-800'>
@@ -51,7 +26,7 @@ function App() {
               <Home>
                 <>
                   {
-                    initialData.map((office) => (
+                    offices.map((office) => (
                       <ServiceCard
                         key={office.id}
                         office={office}

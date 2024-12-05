@@ -1,6 +1,4 @@
-import React from "react";
-
-const isDev = import.meta.env.DEV
+import React from "react"
 
 interface ErrorBoundaryProps {
     children: React.ReactNode;
@@ -20,7 +18,6 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
                 </div>
             )
         }
-        if (isDev) console.log('ErrorBoundary', this.state.error)
         return this.props.children
     }
 }
