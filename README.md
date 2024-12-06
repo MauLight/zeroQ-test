@@ -22,3 +22,6 @@ Librerías a considerar:
 3. `json-server` permite generar endpoints para simular API REST calls desde el front-end.
 4. `date-fns` permite formatear valores de tiempo.
 5. `axios` permite simplificar API calls.
+
+Muchas gracias por esta oportunidad!
+**Enjoy!**
