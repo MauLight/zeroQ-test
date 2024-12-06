@@ -1,32 +1,24 @@
-# SYMETRIA boilerplate (React + Router + Tailwind)
+# CENTRO DE MANDO
 
-This boilerplate offers a starting point for Symetria projects.
+Este build es mi versión del Desafío Frontend Zeroq
 
 ## Installation
 
-To create a new project using this template, you can use the CLI tool provided by this package.
+1. Run `npm i`
+2. Optionally, choose a port in `vite.config.ts`, under server: port (the app runs in port 3000 by default).
+3. Run `json-server --watch offices.json --port 8000` where port can be any port (except 3000).
+4. `npm start`
 
-### Install Using npx
+### Run tests
 
-1. `npx symetria-template project-name`
-2. Replace project-name with a desired name for your project.
-
-### Global Installation
-
-1. You can install the package globally with `npm install -g symetria-template`
-2. Then run `symetria-template project-name`
-
-How to run the template:
-
-2. Run `npm start` (default port= 3000)
-   (\*) To change port go to vite.config.ts and specify a new port under server/port.
+1. `npm test` para correr todas las pruebas
+2. Dentro del entorno de pruebas, presiona `p` para filtrar por nombre de la prueba.
 
 **Important:**
-Formatting should be handled by eslint, please add this settings to your VS Code settings JSON file:
+Librerías a considerar:
 
-> "eslint.format.enable": true,
-> "editor.codeActionsOnSave": {
-> "source.addMissingImports.ts": "explicit",
-> "source.fixAll.eslint": "always"
-> },
-> "eslint.validate": ["javascript"],
+1. `axe-core/react` permite revisar el build y chequear posibles problemas de accesibilidad. Axe-core encontró algunos issues en los colores verde y gris (contraste) que me permitieron cambiarlos a tiempo.
+2. `lodash/isEqual` es un metodo que permite hacer una deep comparison entre arrrays de objetos.
+3. `json-server` permite generar endpoints para simular API REST calls desde el front-end.
+4. `date-fns` permite formatear valores de tiempo.
+5. `axios` permite simplificar API calls.
