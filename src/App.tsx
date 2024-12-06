@@ -43,7 +43,7 @@ function App() {
       {
         status === 'pending' && (
           <div className='flex justify-center pt-44'>
-            <RotatingLines width='60' strokeColor='#ffffff' />
+            <RotatingLines ariaLabel='loader' width='60' strokeColor='#ffffff' />
           </div>
         )
       }
