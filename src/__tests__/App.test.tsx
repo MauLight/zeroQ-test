@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { vi, Mock, MockedFunction } from 'vitest'
+import { vi, MockedFunction } from 'vitest'
 import App from '@/App'
 import useFetchSort from '@/hooks/useFetchSort'
 

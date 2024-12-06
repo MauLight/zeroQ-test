@@ -1,21 +1,27 @@
-import axios from 'axios'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import isEqual from 'lodash/isEqual'
+import axios from 'axios'
+
+import { formatSecondsToMinutes, logInDev } from '@/utils/functions'
 import { OfficesProps } from '@/utils/types'
-import { logInDev } from '@/utils/functions'
 
 const backendUrl = import.meta.env.VITE_BACKENDURL
 
 function useFetchSort() {
+    //* Ref to the initial state of data to diff with client based state and determine updates in dynamic fetch.
     const [initialValues, setInitialValues] = useState<OfficesProps[]>([])
+    //* Main state for fetched data.
     const [offices, setOffices] = useState<OfficesProps[]>([])
+    //*Fetch status to determine client-side rendering.
     const [status, setStatus] = useState<'idle' | 'pending' | 'rejected' | 'success'>('idle')
     const [error, setError] = useState<string>('')
     const [searchTerm, setSearchTerm] = useState<string>('')
 
+    //*Ref to current values of offices and initialValues
     const currOffices = useRef<OfficesProps[]>(offices)
     const initialValuesRef = useRef<OfficesProps[]>(initialValues)
 
+    //*Update refs when changes occur.
     useEffect(() => {
         currOffices.current = offices
     }, [offices])
@@ -24,12 +30,7 @@ function useFetchSort() {
         initialValuesRef.current = initialValues
     }, [initialValues])
 
-    function formatSecondsToMinutes(seconds: number): string {
-        const minutes = Math.floor(seconds / 60)
-        const remainingSeconds = seconds % 60
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`
-    }
-
+    //* GetOffices diffs currOffices with initialValues to determine if a search is taking place, or if fetched data equals last fetched data, in which case it skips update.
     async function getOffices() {
 
         if (currOffices.current.length !== initialValuesRef.current.length) {
@@ -79,6 +80,7 @@ function useFetchSort() {
         }
     }
 
+    //* searchData triggers whenever searchTerm changes, or when the backspace key is pressed.
     function searchData() {
         if (searchTerm.length === 1) {
             setOffices(initialValuesRef.current)
@@ -87,7 +89,8 @@ function useFetchSort() {
         }
     }
 
-    function handleToggleOnline(id: number) {
+    //* useCallback ensures unnecesary renders from calling handle ToggleOnline from different components.
+    const handleToggleOnline = useCallback((id: number) => {
         setOffices(prevOffices => {
             const toggledMap = prevOffices.map((office) => office.id === id ? { ...office, online: !office.online } : office).sort((a, b) => Number(b.online) - Number(a.online))
             const toggledMapInitialValues = initialValuesRef.current.map((office) => office.id === id ? { ...office, online: !office.online } : office).sort((a, b) => Number(b.online) - Number(a.online))
@@ -95,11 +98,12 @@ function useFetchSort() {
             setInitialValues(toggledMapInitialValues)
             return toggledMap
         })
-    }
+    }, [setOffices])
 
+    //* Get fetch started before first painting.
     useLayoutEffect(() => {
         getOffices()
-        const fetchInterval = setInterval(getOffices, 6000)
+        const fetchInterval = setInterval(getOffices, 60000)
         return () => clearInterval(fetchInterval)
     }, [])
 

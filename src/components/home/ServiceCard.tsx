@@ -12,7 +12,6 @@ function ServiceCard({ office, handleToggleOnline }: ServiceCardProps): ReactNod
     const { id, name, elapsed, waiting, online } = office
 
     const headerStyle = online ? 'h-3/4 bg-zeroq-600 flex justify-start items-start py-7 px-5 text-[#ffffff]' : 'h-3/4 bg-[#e2e2e2] flex justify-start items-start py-7 px-5 text-gray-500'
-
     const footerStyle = online ? 'h-1/4 flex gap-x-8 bg-emerald-700 px-5' : 'h-1/4 flex gap-x-8 bg-gray-500 px-5'
 
     return (

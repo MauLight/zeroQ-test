@@ -28,7 +28,7 @@ describe('ServiceCard Component', () => {
     render(<ServiceCard office={mockOffice} handleToggleOnline={mockHandleToggleOnline} />)
 
     const buttonElement = screen.getByRole('button')
-    await fireEvent.click(buttonElement)
+    fireEvent.click(buttonElement)
 
     expect(mockHandleToggleOnline).toHaveBeenCalledWith(mockOffice.id)
   })
