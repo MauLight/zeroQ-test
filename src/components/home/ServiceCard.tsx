@@ -16,9 +16,9 @@ function ServiceCard({ office, handleToggleOnline }: ServiceCardProps): ReactNod
     const footerStyle = online ? 'h-1/4 flex gap-x-8 bg-emerald-700 px-5' : 'h-1/4 flex gap-x-8 bg-gray-500 px-5'
 
     return (
-        <section onClick={() => { handleToggleOnline(id) }} className="h-[12.5rem] col-span-1">
-            <header className={headerStyle}>
-                <h2 className='text-[2rem] leading-tight'>
+        <button onClick={() => { handleToggleOnline(id) }} className="h-[12.5rem] col-span-1">
+            <header role='header' className={headerStyle}>
+                <h2 className='text-[2rem] leading-tight text-left'>
                     {addUppercaseToFirstCharacter(name)}
                 </h2>
             </header>
@@ -32,7 +32,7 @@ function ServiceCard({ office, handleToggleOnline }: ServiceCardProps): ReactNod
                     <p className='text-[1rem]'>{elapsed}</p>
                 </div>
             </footer>
-        </section>
+        </button>
     )
 }
 
